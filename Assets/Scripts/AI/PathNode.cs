@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using Priority_Queue;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathNode //: MonoBehaviour
+public class PathNode
 {
     public bool walkable;           //  Свободна для перемещения
+    public bool visited = false;
     public Vector3 worldPosition;   //  Позиция в глобальных координатах
     private GameObject objPrefab;   //  Шаблон объекта
     public GameObject body;         //  Объект для отрисовки
@@ -68,15 +70,14 @@ public class PathNode //: MonoBehaviour
     /// <returns></returns>
     public static float Dist(PathNode a, PathNode b)
     {
-        return Vector3.Distance(a.body.transform.position, b.body.transform.position) + 40 * Mathf.Abs(a.body.transform.position.y - b.body.transform.position.y);
+        return Vector3.Distance(a.body.transform.position, b.body.transform.position) + 40*Mathf.Abs(a.body.transform.position.y - b.body.transform.position.y);
     }
-    
     /// <summary>
     /// Подсветить вершину - перекрасить в красный
     /// </summary>
     public void Illuminate()
     {
-        body.GetComponent<Renderer>().material.color = Color.red;
+        body.GetComponent<Renderer>().material.color = Color.green;
     }
     
     /// <summary>
@@ -85,5 +86,10 @@ public class PathNode //: MonoBehaviour
     public void Fade()
     {
         body.GetComponent<Renderer>().material.color = Color.blue;
+    }
+
+    public void Impassable()
+    {
+        body.GetComponent<Renderer>().material.color = Color.red;
     }
 }
